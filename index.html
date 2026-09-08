@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danh mục Bản quyền Microsoft — VNPT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* VNPT blue as the structural / dominant color */
+    --paper:#F3F6FA;
+    --paper-raised:#FFFFFF;
+    --ink:#0B1F3A;
+    --ink-soft:#54637A;
+    --rule:#D7E0EC;
+    --rule-strong:#AEC0D6;
+    --blue:#005AAA;        /* VNPT blue */
+    --blue-deep:#00397A;   /* darker VNPT blue */
+    --blue-bright:#0078D4; /* Microsoft blue, used for links/live-state */
+
+    /* Microsoft's four accent colors, used sparingly as functional signals only */
+    --ms-red:#E81123;
+    --ms-green:#7FBA00;
+    --ms-blue:#00A4EF;
+    --ms-yellow:#FFB900;
+
+    --amber:#B8860B;        /* Copilot highlight, muted gold — restrained nod to MS yellow */
+    --amber-soft:#FBF3DC;
+
+    --seg-personal:#7FBA00;  /* MS green */
+    --seg-smb:#00A4EF;       /* MS blue */
+    --seg-ent:#00397A;       /* VNPT deep blue */
+    --seg-gov:#54637A;
+    --seg-npo:#B8860B;
+
+    --zebra:#EAF0F8;
+    --focus:#00397A;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:15px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Source Serif 4',Georgia,serif;
+    font-weight:600;
+    margin:0;
+  }
+  a{color:var(--blue-deep);}
+  ::selection{background:var(--amber-soft);}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* ===== MASTHEAD ===== */
+  .masthead{
+    border-bottom:3px double var(--rule-strong);
+    padding:36px 6vw 22px;
+    background:var(--paper);
+  }
+  .masthead-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:16px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .masthead-kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .masthead h1{
+    font-size:clamp(28px,4vw,42px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  .masthead .updated{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-align:right;
+    font-family:'IBM Plex Mono',monospace;
+    white-space:nowrap;
+  }
+  .masthead-sub{
+    max-width:1200px;
+    margin:14px auto 0;
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:640px;
+  }
+
+  /* ===== TAB NAV (index-tab style) ===== */
+  .tabbar{
+    position:sticky; top:0; z-index:40;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule-strong);
+    padding:0 6vw;
+  }
+  .tabbar-inner{
+    max-width:1200px; margin:0 auto;
+    display:flex; gap:2px;
+  }
+  .tab{
+    appearance:none; border:none; background:transparent;
+    font-family:'Source Serif 4',serif;
+    font-size:16px;
+    color:var(--ink-soft);
+    padding:14px 18px 12px;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    position:relative;
+    top:1px;
+  }
+  .tab:hover{color:var(--ink);}
+  .tab.active{
+    color:var(--ink);
+    border-bottom-color:var(--blue);
+  }
+  .tab .count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-left:6px;
+  }
+
+  main{max-width:1200px; margin:0 auto; padding:36px 6vw 80px;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ===== SECTION HEADS ===== */
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:16px; margin-bottom:20px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:22px;}
+  .section-note{font-size:13px; color:var(--ink-soft); max-width:420px;}
+
+  /* ===== OVERVIEW: segment ledger rows ===== */
+  .seg-list{display:flex; flex-direction:column; border-top:1px solid var(--rule-strong);}
+  .seg-row{
+    display:grid;
+    grid-template-columns:5px 1fr auto;
+    gap:0;
+    border-bottom:1px solid var(--rule);
+    background:var(--paper-raised);
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .seg-row:hover{background:#FBFAF7;}
+  .seg-row .bar{background:var(--c);}
+  .seg-row .body{padding:20px 22px;}
+  .seg-row .stat{
+    display:flex; flex-direction:column; align-items:flex-end;
+    justify-content:center; padding:20px 22px; border-left:1px solid var(--rule);
+    min-width:150px;
+  }
+  .seg-row h3{font-size:19px; margin-bottom:6px; display:flex; align-items:center; gap:10px;}
+  .seg-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px;
+    color:var(--c); border:1px solid var(--c); border-radius:2px;
+    padding:2px 6px; text-transform:none;
+  }
+  .seg-row .groups{font-size:12.5px; color:var(--ink-soft); margin:2px 0 10px;}
+  .seg-row .trait{font-size:13.5px; color:var(--ink); line-height:1.55; max-width:640px;}
+  .seg-row .offer{
+    font-size:12.5px; color:var(--amber); margin-top:10px;
+    border-left:2px solid var(--amber); padding-left:10px;
+  }
+  .stat .num{font-family:'Source Serif 4',serif; font-size:30px; line-height:1;}
+  .stat .lbl{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-soft); margin-top:4px;}
+  .stat .num2{font-size:15px; color:var(--ink-soft); margin-top:8px; font-family:'IBM Plex Mono',monospace;}
+
+  /* ===== FILTER BAR ===== */
+  .filters{
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    padding:14px 0 18px; border-bottom:1px solid var(--rule-strong); margin-bottom:2px;
+  }
+  .filters input[type=search]{
+    flex:1 1 220px;
+    font-family:'Inter',sans-serif; font-size:14px;
+    padding:9px 12px; border:1px solid var(--rule-strong); border-radius:3px;
+    background:var(--paper-raised); color:var(--ink);
+  }
+  .filters select{
+    font-family:'Inter',sans-serif; font-size:13.5px;
+    padding:9px 10px; border:1px solid var(--rule-strong); border-radius:3px;
+    background:var(--paper-raised); color:var(--ink);
+  }
+  .filters .chip-toggle{
+    display:flex; align-items:center; gap:6px;
+    font-size:13px; color:var(--ink-soft);
+    border:1px solid var(--rule-strong); border-radius:3px;
+    padding:9px 12px; cursor:pointer; user-select:none;
+    background:var(--paper-raised);
+  }
+  .filters .chip-toggle.on{
+    background:var(--amber-soft); border-color:var(--amber); color:var(--amber);
+  }
+  .result-count{font-size:12.5px; color:var(--ink-soft); margin:10px 0 14px; font-family:'IBM Plex Mono',monospace;}
+
+  /* ===== TABLE ===== */
+  .table-wrap{overflow-x:auto; border:1px solid var(--rule-strong); border-radius:3px; background:var(--paper-raised);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:920px;}
+  thead th{
+    position:sticky; top:0;
+    background:var(--ink); color:#F6F5F1;
+    font-family:'IBM Plex Mono',monospace; font-weight:500;
+    font-size:10.5px; letter-spacing:.03em;
+    text-align:left; padding:10px 12px; white-space:nowrap;
+  }
+  thead th.num{text-align:right;}
+  tbody td{padding:10px 12px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  tbody tr:nth-child(even){background:var(--zebra);}
+  tbody tr:hover{background:var(--amber-soft);}
+  td.num{text-align:right; font-family:'IBM Plex Mono',monospace; white-space:nowrap;}
+  td.product{font-weight:600; min-width:200px;}
+  td.desc{color:var(--ink-soft); font-size:12.5px; min-width:260px; max-width:340px;}
+  .badge{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10px;
+    padding:2px 6px; border-radius:2px; white-space:nowrap;
+  }
+  .badge.copilot{background:var(--amber-soft); color:var(--amber);}
+  .badge.nocopilot{background:transparent; color:var(--ink-soft); border:1px solid var(--rule-strong);}
+  .seg-dot{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px; background:var(--c);}
+  .empty-row td{text-align:center; padding:40px; color:var(--ink-soft); font-style:italic;}
+
+  /* ===== OFFERS ===== */
+  .offer-list{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--rule-strong);}
+  .offer-item{
+    border-bottom:1px solid var(--rule);
+    padding:20px 4px;
+    display:grid; grid-template-columns:200px 1fr; gap:24px;
+  }
+  .offer-item .seg-label{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--c);
+    display:flex; align-items:flex-start; gap:6px; padding-top:3px;
+  }
+  .offer-item h3{font-size:17px; margin-bottom:8px;}
+  .offer-item .desc{font-size:13.5px; line-height:1.6; margin-bottom:10px;}
+  .offer-meta{display:flex; gap:22px; flex-wrap:wrap; font-size:12px; color:var(--ink-soft);}
+  .offer-meta strong{color:var(--ink); font-weight:600;}
+  .offer-meta .status-live{color:var(--seg-personal); font-weight:600;}
+
+  /* ===== GLOSSARY ===== */
+  .glossary-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:0; border-top:1px solid var(--rule-strong); border-left:1px solid var(--rule-strong);
+  }
+  .glossary-item{
+    border-right:1px solid var(--rule-strong); border-bottom:1px solid var(--rule-strong);
+    padding:16px 18px; background:var(--paper-raised);
+  }
+  .glossary-item dt{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600;
+    color:var(--blue-deep); margin-bottom:6px;
+  }
+  .glossary-item dd{margin:0; font-size:13px; color:var(--ink); line-height:1.55;}
+
+  td.notes{color:var(--ink-soft); font-size:12px; font-style:italic; min-width:180px; max-width:260px;}
+  .badge.teams-yes{background:#EAF0F8; color:var(--blue-deep); border:1px solid var(--rule-strong);}
+  .badge.teams-no{background:transparent; color:var(--ink-soft); border:1px solid var(--rule-strong);}
+
+  .disclaimer{
+    margin-top:34px; padding:16px 18px; border:1px solid var(--rule-strong);
+    background:#FBF7EE; font-size:12.5px; color:#6B5A2A; border-radius:3px;
+    display:flex; gap:10px;
+  }
+
+  footer{
+    border-top:3px double var(--rule-strong);
+    padding:22px 6vw 40px; text-align:center;
+    font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;
+  }
+
+  @media (max-width:760px){
+    .seg-row{grid-template-columns:5px 1fr;}
+    .seg-row .stat{border-left:none; border-top:1px solid var(--rule); flex-direction:row; justify-content:space-between; align-items:baseline;}
+    .offer-item{grid-template-columns:1fr; gap:6px;}
+    .masthead-top{flex-direction:column; align-items:flex-start;}
+    .masthead .updated{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <div>
+      <p class="masthead-kicker">VNPT — RESELLER / CSP · THAM KHẢO NỘI BỘ</p>
+      <h1>Danh mục Bản quyền Microsoft</h1>
+    </div>
+    <div class="updated">CẬP NHẬT: 08/09/2026</div>
+  </div>
+  <p class="masthead-sub">Tổng hợp gói cước, giá bán và chương trình ưu đãi Microsoft theo từng nhóm khách hàng, phục vụ tra cứu nhanh cho các đơn vị kinh doanh.</p>
+</header>
+
+<nav class="tabbar">
+  <div class="tabbar-inner">
+    <button class="tab active" data-view="overview">Tổng hợp theo nhóm KH</button>
+    <button class="tab" data-view="catalog">Danh mục sản phẩm <span class="count" id="catalogCount"></span></button>
+    <button class="tab" data-view="offers">Ưu đãi theo nhóm KH <span class="count" id="offersCount"></span></button>
+    <button class="tab" data-view="glossary">Chú giải thuật ngữ</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ===================== OVERVIEW ===================== -->
+  <section class="view active" id="view-overview">
+    <div class="section-head">
+      <h2>Tổng hợp theo nhóm khách hàng</h2>
+      <p class="section-note">Bấm vào một nhóm để xem chi tiết sản phẩm tương ứng trong tab Danh mục sản phẩm.</p>
+    </div>
+    <div class="seg-list" id="segList"></div>
+  </section>
+
+  <!-- ===================== CATALOG ===================== -->
+  <section class="view" id="view-catalog">
+    <div class="section-head">
+      <h2>Danh mục sản phẩm</h2>
+      <p class="section-note">Giá tham khảo, chưa gồm VAT trừ khi có ghi chú khác. Đơn giá theo USD.</p>
+    </div>
+    <div class="filters">
+      <input type="search" id="searchBox" placeholder="Tìm theo tên sản phẩm, SKU, mô tả…">
+      <select id="segFilter"><option value="">Tất cả nhóm KH</option></select>
+      <select id="groupFilter"><option value="">Tất cả nhóm SP</option></select>
+      <select id="billingFilter"><option value="">Tất cả hình thức TT</option></select>
+      <div class="chip-toggle" id="copilotToggle">✨ Chỉ hiện gói có Copilot</div>
+    </div>
+    <p class="result-count" id="resultCount"></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nhóm KH</th>
+            <th>Nhóm SP</th>
+            <th>Sản phẩm / SKU</th>
+            <th>Loại license</th>
+            <th>Thanh toán</th>
+            <th>Đơn vị tính</th>
+            <th class="num">Giá ERP</th>
+            <th class="num">Giá Reseller</th>
+            <th>VAT</th>
+            <th>Kênh</th>
+            <th>Teams</th>
+            <th>Copilot</th>
+            <th>Mô tả</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody id="catalogBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== OFFERS ===================== -->
+  <section class="view" id="view-offers">
+    <div class="section-head">
+      <h2>Ưu đãi theo nhóm khách hàng</h2>
+      <p class="section-note">Chi tiết từng chương trình khuyến mãi, điều kiện áp dụng và nguồn tham khảo.</p>
+    </div>
+    <div class="offer-list" id="offerList"></div>
+    <div class="disclaimer">
+      ⚠ <div>Phần lớn chương trình trên là chính sách toàn cầu/Mỹ (trừ khi ghi chú khác). Với vai trò VNPT là Reseller/CSP tại VN, cần xác nhận trực tiếp với Microsoft VN/Partner Center về mức áp dụng thực tế trước khi tư vấn cho khách hàng.</div>
+    </div>
+  </section>
+
+  <!-- ===================== GLOSSARY ===================== -->
+  <section class="view" id="view-glossary">
+    <div class="section-head">
+      <h2>Chú giải thuật ngữ</h2>
+      <p class="section-note">Giải thích các từ viết tắt và thuật ngữ xuất hiện trong danh mục sản phẩm, để tra cứu nhanh khi tư vấn.</p>
+    </div>
+    <div class="glossary-grid" id="glossaryGrid"></div>
+  </section>
+
+</main>
+
+<footer>
+  BanKDGP_Danh_muc_san_pham_Microsoft — Tài liệu tổng hợp nội bộ, không dùng làm báo giá chính thức.
+</footer>
+
+<script>
+const PRODUCTS = [{"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "Excel LTSC 2024", "sku": "Excel LTSC 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng bảng tính Excel bản cài đặt vĩnh viễn (không thuê bao), phiên bản LTSC 2024 cho Windows."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "Excel LTSC for Mac 2024", "sku": "Excel LTSC for Mac 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng bảng tính Excel bản cài đặt vĩnh viễn dành cho máy Mac, phiên bản LTSC 2024."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "Office LTSC Standard for Mac 2024", "sku": "Office LTSC Standard for Mac 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "495", "reseller_price": "441,79", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Bộ Office (Word, Excel, PowerPoint, Outlook...) bản cài đặt vĩnh viễn cho Mac, phiên bản LTSC 2024."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "Outlook LTSC 2024", "sku": "Outlook LTSC 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng quản lý email/lịch Outlook bản cài đặt vĩnh viễn, phiên bản LTSC 2024 cho Windows."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "Outlook LTSC for Mac 2024", "sku": "Outlook LTSC for Mac 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng Outlook bản cài đặt vĩnh viễn dành cho Mac, phiên bản LTSC 2024."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "PowerPoint LTSC 2024", "sku": "PowerPoint LTSC 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng trình chiếu PowerPoint bản cài đặt vĩnh viễn, phiên bản LTSC 2024 cho Windows."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "PowerPoint LTSC for Mac 2024", "sku": "PowerPoint LTSC for Mac 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng PowerPoint bản cài đặt vĩnh viễn dành cho Mac, phiên bản LTSC 2024."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "Word LTSC 2024", "sku": "Word LTSC 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng soạn thảo văn bản Word bản cài đặt vĩnh viễn, phiên bản LTSC 2024 cho Windows."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Office - Vĩnh viễn", "product": "Word LTSC for Mac 2024", "sku": "Word LTSC for Mac 2024", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "170", "reseller_price": "169,58", "vat": "KCT", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Ứng dụng Word bản cài đặt vĩnh viễn dành cho Mac, phiên bản LTSC 2024."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Visual Studio", "product": "Visual Studio Professional 2026", "sku": "Visual Studio Professional 2026", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "License", "currency": "USD", "erp_price": "499", "reseller_price": "445,36", "vat": "10%", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "Môi trường phát triển phần mềm (IDE) chuyên nghiệp, license vĩnh viễn, phiên bản 2026."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Microsoft 365 Cá nhân", "product": "Microsoft 365 Personal", "sku": "Microsoft 365 Personal", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "99,99", "reseller_price": "", "vat": "10%", "channel": "Online/Retail", "teams": "N/A", "copilot": "Có Copilot", "notes": "Giá tham khảo toàn cầu (Microsoft.com); chưa xác nhận giá bán lẻ chính thức & chiết khấu Reseller tại VN", "description": "Gói thuê bao Microsoft 365 cho 1 người dùng: Word/Excel/PowerPoint/Outlook bản đầy đủ trên nhiều thiết bị, 1TB OneDrive, tích hợp sẵn Copilot AI (~60 credit/tháng)."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Microsoft 365 Cá nhân", "product": "Microsoft 365 Personal", "sku": "Microsoft 365 Personal", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "9,99", "reseller_price": "", "vat": "10%", "channel": "Online/Retail", "teams": "N/A", "copilot": "Có Copilot", "notes": "Giá tham khảo toàn cầu (Microsoft.com); chưa xác nhận giá bán lẻ chính thức & chiết khấu Reseller tại VN", "description": "Gói thuê bao Microsoft 365 cho 1 người dùng: Word/Excel/PowerPoint/Outlook bản đầy đủ trên nhiều thiết bị, 1TB OneDrive, tích hợp sẵn Copilot AI (~60 credit/tháng)."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Microsoft 365 Cá nhân", "product": "Microsoft 365 Family", "sku": "Microsoft 365 Family", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "129,99", "reseller_price": "", "vat": "10%", "channel": "Online/Retail", "teams": "N/A", "copilot": "Có Copilot", "notes": "Giá tham khảo toàn cầu (Microsoft.com); chưa xác nhận giá bán lẻ chính thức & chiết khấu Reseller tại VN", "description": "Gói thuê bao Microsoft 365 dùng chung tối đa 6 người trong gia đình, mỗi người 1TB OneDrive riêng (tổng tới 6TB); chủ tài khoản được tích hợp Copilot AI."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Microsoft 365 Cá nhân", "product": "Microsoft 365 Family", "sku": "Microsoft 365 Family", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "12,99", "reseller_price": "", "vat": "10%", "channel": "Online/Retail", "teams": "N/A", "copilot": "Có Copilot", "notes": "Giá tham khảo toàn cầu (Microsoft.com); chưa xác nhận giá bán lẻ chính thức & chiết khấu Reseller tại VN", "description": "Gói thuê bao Microsoft 365 dùng chung tối đa 6 người trong gia đình, mỗi người 1TB OneDrive riêng (tổng tới 6TB); chủ tài khoản được tích hợp Copilot AI."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Microsoft 365 Cá nhân", "product": "Microsoft 365 Premium", "sku": "Microsoft 365 Premium", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "199,99", "reseller_price": "", "vat": "10%", "channel": "Online/Retail", "teams": "N/A", "copilot": "Có Copilot", "notes": "Giá tham khảo toàn cầu (Microsoft.com); gói mới thay thế Copilot Pro, ra mắt 10/2025; chưa xác nhận giá VN", "description": "Gói cao cấp nhất cho cá nhân/gia đình, tăng mạnh hạn mức sử dụng Copilot AI trong các ứng dụng Office so với Personal/Family, dùng chung tối đa 6 người."}, {"segment": "Cá nhân & Hộ gia đình", "group": "Microsoft 365 Cá nhân", "product": "Microsoft 365 Premium", "sku": "Microsoft 365 Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "19,99", "reseller_price": "", "vat": "10%", "channel": "Online/Retail", "teams": "N/A", "copilot": "Có Copilot", "notes": "Giá tham khảo toàn cầu (Microsoft.com); gói mới thay thế Copilot Pro, ra mắt 10/2025; chưa xác nhận giá VN", "description": "Gói cao cấp nhất cho cá nhân/gia đình, tăng mạnh hạn mức sử dụng Copilot AI trong các ứng dụng Office so với Personal/Family, dùng chung tối đa 6 người."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1", "sku": "Office 365 E1", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "126", "reseller_price": "105,84", "vat": "10%", "channel": "Reseller", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Office 365 cơ bản cho tổ chức lớn/nhà nước: chỉ Office bản web/mobile, không có Office cài desktop."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1", "sku": "Office 365 E1", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "120", "reseller_price": "100,8", "vat": "10%", "channel": "Reseller", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói Office 365 cơ bản cho tổ chức lớn/nhà nước: chỉ Office bản web/mobile, không có Office cài desktop."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1", "sku": "Office 365 E1 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "85,56", "reseller_price": "71,82", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Office 365 cơ bản cho tổ chức lớn/nhà nước: chỉ Office bản web/mobile, không có Office cài desktop."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1", "sku": "Office 365 E1", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "12", "reseller_price": "10,08", "vat": "10%", "channel": "Reseller", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Office 365 cơ bản cho tổ chức lớn/nhà nước: chỉ Office bản web/mobile, không có Office cài desktop."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1", "sku": "Office 365 E1 (no Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "81,48", "reseller_price": "68,439", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Office 365 cơ bản cho tổ chức lớn/nhà nước: chỉ Office bản web/mobile, không có Office cài desktop."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1", "sku": "Office 365 E1 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "8,15", "reseller_price": "6,846", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Office 365 cơ bản cho tổ chức lớn/nhà nước: chỉ Office bản web/mobile, không có Office cài desktop."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1 Plus", "sku": "Office 365 E1 Plus", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "252", "reseller_price": "211,68", "vat": "10%", "channel": "Reseller", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phiên bản mở rộng của E1, bổ sung thêm tính năng/quyền lợi so với E1 chuẩn (SKU nâng cấp theo nhà cung cấp)."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1 Plus", "sku": "Office 365 E1 Plus (No Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "20,15", "reseller_price": "16,926", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Phiên bản mở rộng của E1, bổ sung thêm tính năng/quyền lợi so với E1 chuẩn (SKU nâng cấp theo nhà cung cấp)."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1 Plus", "sku": "Office 365 E1 Plus", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "240", "reseller_price": "201,6", "vat": "10%", "channel": "Reseller", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Phiên bản mở rộng của E1, bổ sung thêm tính năng/quyền lợi so với E1 chuẩn (SKU nâng cấp theo nhà cung cấp)."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1 Plus", "sku": "Office 365 E1 Plus (No Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "201,48", "reseller_price": "169,239", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Phiên bản mở rộng của E1, bổ sung thêm tính năng/quyền lợi so với E1 chuẩn (SKU nâng cấp theo nhà cung cấp)."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1 Plus", "sku": "Office 365 E1 Plus", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "24", "reseller_price": "20,16", "vat": "10%", "channel": "Reseller", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phiên bản mở rộng của E1, bổ sung thêm tính năng/quyền lợi so với E1 chuẩn (SKU nâng cấp theo nhà cung cấp)."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 E1 Plus", "sku": "Office 365 E1 Plus (No Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "211,56", "reseller_price": "177,66", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Phiên bản mở rộng của E1, bổ sung thêm tính năng/quyền lợi so với E1 chuẩn (SKU nâng cấp theo nhà cung cấp)."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 F3", "sku": "Office 365 F3 (no Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "42", "reseller_price": "35,28", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Office 365 dành cho nhân viên tuyến đầu, quyền hạn giới hạn hơn E-series, chi phí thấp."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 F3", "sku": "Office 365 F3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "50,4", "reseller_price": "42,336", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Office 365 dành cho nhân viên tuyến đầu, quyền hạn giới hạn hơn E-series, chi phí thấp."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 F3", "sku": "Office 365 F3", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "48", "reseller_price": "40,32", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói Office 365 dành cho nhân viên tuyến đầu, quyền hạn giới hạn hơn E-series, chi phí thấp."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 F3", "sku": "Office 365 F3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "4,8", "reseller_price": "4,032", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Office 365 dành cho nhân viên tuyến đầu, quyền hạn giới hạn hơn E-series, chi phí thấp."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 F3", "sku": "Office 365 F3 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "44,16", "reseller_price": "37,044", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Office 365 dành cho nhân viên tuyến đầu, quyền hạn giới hạn hơn E-series, chi phí thấp."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "group": "Office 365", "product": "Office 365 F3", "sku": "Office 365 F3 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "4,2", "reseller_price": "3,528", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Office 365 dành cho nhân viên tuyến đầu, quyền hạn giới hạn hơn E-series, chi phí thấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft 365 Copilot", "sku": "Microsoft 365 Copilot Business", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "25,2", "reseller_price": "21,168", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Monthly", "description": "Trợ lý AI tích hợp vào các ứng dụng Office (Word, Excel, Outlook, Teams...) để hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft 365 Copilot", "sku": "Microsoft 365 Copilot Business", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "264,6", "reseller_price": "222,264", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Monthly", "description": "Trợ lý AI tích hợp vào các ứng dụng Office (Word, Excel, Outlook, Teams...) để hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft 365 Copilot", "sku": "Microsoft 365 Copilot - 3 year", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "1080", "reseller_price": "907,2", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Annual", "description": "Trợ lý AI tích hợp vào các ứng dụng Office (Word, Excel, Outlook, Teams...) để hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft 365 Copilot", "sku": "Microsoft 365 Copilot Business", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "252", "reseller_price": "211,68", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Annual", "description": "Trợ lý AI tích hợp vào các ứng dụng Office (Word, Excel, Outlook, Teams...) để hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft 365 Copilot", "sku": "Microsoft 365 Copilot - 3 year", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "1080", "reseller_price": "907,2", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Triennial", "description": "Trợ lý AI tích hợp vào các ứng dụng Office (Word, Excel, Outlook, Teams...) để hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft 365 Copilot", "sku": "Microsoft 365 Copilot", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "360", "reseller_price": "302,4", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Annual", "description": "Trợ lý AI tích hợp vào các ứng dụng Office (Word, Excel, Outlook, Teams...) để hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft 365 Copilot", "sku": "Microsoft 365 Copilot", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "378", "reseller_price": "317,52", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Monthly", "description": "Trợ lý AI tích hợp vào các ứng dụng Office (Word, Excel, Outlook, Teams...) để hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft Copilot Studio", "sku": "Microsoft Copilot Studio", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "2520", "reseller_price": "2381,4", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Monthly", "description": "Nền tảng low-code để xây dựng và tùy chỉnh chatbot/AI agent riêng, tích hợp dữ liệu doanh nghiệp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft Copilot Studio", "sku": "Microsoft Copilot Studio", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "240", "reseller_price": "226,8", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Monthly", "description": "Nền tảng low-code để xây dựng và tùy chỉnh chatbot/AI agent riêng, tích hợp dữ liệu doanh nghiệp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "AI - Copilot", "product": "Microsoft Copilot Studio", "sku": "Microsoft Copilot Studio", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "2400", "reseller_price": "2268", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Có Copilot", "notes": "Có Copilot; Thanh toán Annual", "description": "Nền tảng low-code để xây dựng và tùy chỉnh chatbot/AI agent riêng, tích hợp dữ liệu doanh nghiệp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3 - 3 year", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "1404", "reseller_price": "1179,36", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "468", "reseller_price": "393,12", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3 - 3 year", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "1404", "reseller_price": "1179,36", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "383,64", "reseller_price": "322,308", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "36,54", "reseller_price": "30,6915", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3 (no Teams) - 3 year", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "1096,2", "reseller_price": "920,808", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "491,4", "reseller_price": "412,776", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "46,8", "reseller_price": "39,312", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3 (no Teams) - 3 year", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "1096,2", "reseller_price": "920,808", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Triennial", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E3", "sku": "Microsoft 365 E3 (no Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "365,4", "reseller_price": "306,936", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Enterprise tầm trung: kết hợp Office 365 E3 + Windows Enterprise E3 + Enterprise Mobility + Security E3."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E5", "sku": "Microsoft 365 E5 (no Teams) - 3 year", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "1852,2", "reseller_price": "1555,848", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Enterprise cao cấp nhất: kết hợp Office 365 E5 + Windows Enterprise E5 + EMS E5, đầy đủ bảo mật/analytics/voice."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E5", "sku": "Microsoft 365 E5 (no Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "617,4", "reseller_price": "518,616", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Enterprise cao cấp nhất: kết hợp Office 365 E5 + Windows Enterprise E5 + EMS E5, đầy đủ bảo mật/analytics/voice."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E5", "sku": "Microsoft 365 E5 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "648,24", "reseller_price": "544,572", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Enterprise cao cấp nhất: kết hợp Office 365 E5 + Windows Enterprise E5 + EMS E5, đầy đủ bảo mật/analytics/voice."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E5", "sku": "Microsoft 365 E5 (no Teams) - 3 year", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "1852,2", "reseller_price": "1555,848", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Triennial", "description": "Gói Enterprise cao cấp nhất: kết hợp Office 365 E5 + Windows Enterprise E5 + EMS E5, đầy đủ bảo mật/analytics/voice."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E5", "sku": "Microsoft 365 E5 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "61,74", "reseller_price": "51,8595", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Enterprise cao cấp nhất: kết hợp Office 365 E5 + Windows Enterprise E5 + EMS E5, đầy đủ bảo mật/analytics/voice."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7 - 3 year", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "3564", "reseller_price": "2993,76", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7 (No Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "1139,64", "reseller_price": "957,348", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "118,8", "reseller_price": "99,792", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "1247,4", "reseller_price": "1047,816", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7 (No Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "108,54", "reseller_price": "91,1715", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7 (No Teams) - 3 year", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "3256,2", "reseller_price": "2735,208", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7 (No Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "1085,4", "reseller_price": "911,736", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7 - 3 year", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "3564", "reseller_price": "2993,76", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7 (No Teams) - 3 year", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "3256,2", "reseller_price": "2735,208", "vat": "10%", "channel": "CSP", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Triennial", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Enterprise", "product": "Microsoft 365 E7", "sku": "Microsoft 365 E7", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "1188", "reseller_price": "997,92", "vat": "10%", "channel": "CSP", "teams": "Có Teams", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói Enterprise mở rộng dựa trên E5, bổ sung thêm các tính năng bảo mật/quản lý nâng cao hơn nữa (SKU tùy chỉnh theo nhà cung cấp)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F1", "sku": "Microsoft 365 F1 (no Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "30", "reseller_price": "25,2", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói dành cho nhân viên tuyến đầu (Frontline), quyền hạn tối thiểu (không có mailbox đầy đủ), giá rất thấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F1", "sku": "Microsoft 365 F1", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "3,6", "reseller_price": "3,024", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói dành cho nhân viên tuyến đầu (Frontline), quyền hạn tối thiểu (không có mailbox đầy đủ), giá rất thấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F1", "sku": "Microsoft 365 F1 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "31,56", "reseller_price": "26,46", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói dành cho nhân viên tuyến đầu (Frontline), quyền hạn tối thiểu (không có mailbox đầy đủ), giá rất thấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F1", "sku": "Microsoft 365 F1", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "36", "reseller_price": "30,24", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói dành cho nhân viên tuyến đầu (Frontline), quyền hạn tối thiểu (không có mailbox đầy đủ), giá rất thấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F1", "sku": "Microsoft 365 F1 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "3", "reseller_price": "2,52", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói dành cho nhân viên tuyến đầu (Frontline), quyền hạn tối thiểu (không có mailbox đầy đủ), giá rất thấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F1", "sku": "Microsoft 365 F1", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "37,8", "reseller_price": "31,752", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói dành cho nhân viên tuyến đầu (Frontline), quyền hạn tối thiểu (không có mailbox đầy đủ), giá rất thấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F3", "sku": "Microsoft 365 F3 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "10,72", "reseller_price": "8,9985", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói nhân viên tuyến đầu đầy đủ hơn F1, có mailbox Exchange riêng và Office bản web/mobile."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F3", "sku": "Microsoft 365 F3 (no Teams)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "112,56", "reseller_price": "94,5", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Monthly", "description": "Gói nhân viên tuyến đầu đầy đủ hơn F1, có mailbox Exchange riêng và Office bản web/mobile."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F3", "sku": "Microsoft 365 F3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "12", "reseller_price": "10,08", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói nhân viên tuyến đầu đầy đủ hơn F1, có mailbox Exchange riêng và Office bản web/mobile."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F3", "sku": "Microsoft 365 F3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "126", "reseller_price": "105,84", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói nhân viên tuyến đầu đầy đủ hơn F1, có mailbox Exchange riêng và Office bản web/mobile."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F3", "sku": "Microsoft 365 F3", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "120", "reseller_price": "100,8", "vat": "10%", "channel": "Reseller", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói nhân viên tuyến đầu đầy đủ hơn F1, có mailbox Exchange riêng và Office bản web/mobile."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Microsoft 365 Frontline", "product": "Microsoft 365 F3", "sku": "Microsoft 365 F3 (no Teams)", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "107,16", "reseller_price": "90,0165", "vat": "10%", "channel": "Reseller", "teams": "No Teams", "copilot": "Không Copilot", "notes": "No Teams; Thanh toán Annual", "description": "Gói nhân viên tuyến đầu đầy đủ hơn F1, có mailbox Exchange riêng và Office bản web/mobile."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Per App (1 app or website)", "sku": "Power Apps per app plan (1 app or website)", "license_type": "Hàng năm", "billing": "Annual", "unit": "App", "currency": "USD", "erp_price": "60", "reseller_price": "50,4", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Cấp quyền sử dụng cho 1 ứng dụng/website cụ thể được xây dựng bằng Power Apps, theo mô hình trả phí theo từng app."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Per App (1 app or website)", "sku": "Power Apps per app plan (1 app or website)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "App", "currency": "USD", "erp_price": "63", "reseller_price": "52,92", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Cấp quyền sử dụng cho 1 ứng dụng/website cụ thể được xây dựng bằng Power Apps, theo mô hình trả phí theo từng app."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Per App (1 app or website)", "sku": "Power Apps per app plan (1 app or website)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "App", "currency": "USD", "erp_price": "6", "reseller_price": "5,04", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Cấp quyền sử dụng cho 1 ứng dụng/website cụ thể được xây dựng bằng Power Apps, theo mô hình trả phí theo từng app."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Premium", "sku": "Power Apps Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "App", "currency": "USD", "erp_price": "24", "reseller_price": "18,9", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Cấp quyền sử dụng không giới hạn số lượng ứng dụng Power Apps cho mỗi người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Premium", "sku": "Power Apps Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "App", "currency": "USD", "erp_price": "252", "reseller_price": "198,45", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Cấp quyền sử dụng không giới hạn số lượng ứng dụng Power Apps cho mỗi người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Premium", "sku": "Power Apps Premium (2000 seat min)", "license_type": "Hàng năm", "billing": "Monthly", "unit": "App", "currency": "USD", "erp_price": "151,2", "reseller_price": "119,07", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Cấp quyền sử dụng không giới hạn số lượng ứng dụng Power Apps cho mỗi người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Premium", "sku": "Power Apps Premium (2000 seat min)", "license_type": "Hàng năm", "billing": "Annual", "unit": "App", "currency": "USD", "erp_price": "144", "reseller_price": "113,4", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Cấp quyền sử dụng không giới hạn số lượng ứng dụng Power Apps cho mỗi người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Apps Premium", "sku": "Power Apps Premium", "license_type": "Hàng năm", "billing": "Annual", "unit": "App", "currency": "USD", "erp_price": "240", "reseller_price": "189", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Cấp quyền sử dụng không giới hạn số lượng ứng dụng Power Apps cho mỗi người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate Premium", "sku": "Power Automate Premium", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "180", "reseller_price": "141,75", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Tự động hóa quy trình (workflow automation) với quyền dùng connector cao cấp (premium connectors) không giới hạn."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate Premium", "sku": "Power Automate Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "189", "reseller_price": "148,806", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Tự động hóa quy trình (workflow automation) với quyền dùng connector cao cấp (premium connectors) không giới hạn."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate Premium", "sku": "Power Automate Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "18", "reseller_price": "14,175", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Tự động hóa quy trình (workflow automation) với quyền dùng connector cao cấp (premium connectors) không giới hạn."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate Process", "sku": "Power Automate Process", "license_type": "Hàng năm", "billing": "Monthly", "unit": "Process", "currency": "USD", "erp_price": "1890", "reseller_price": "1587,6", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License tự động hóa quy trình theo mô hình 'per process' - dùng cho các bot tự động hóa quy trình cụ thể (RPA)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate Process", "sku": "Power Automate Process", "license_type": "Hàng năm", "billing": "Monthly", "unit": "Process", "currency": "USD", "erp_price": "180", "reseller_price": "151,2", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License tự động hóa quy trình theo mô hình 'per process' - dùng cho các bot tự động hóa quy trình cụ thể (RPA)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate Process", "sku": "Power Automate Process", "license_type": "Hàng năm", "billing": "Annual", "unit": "Process", "currency": "USD", "erp_price": "1800", "reseller_price": "1512", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "License tự động hóa quy trình theo mô hình 'per process' - dùng cho các bot tự động hóa quy trình cụ thể (RPA)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate per flow plan", "sku": "Power Automate per flow plan", "license_type": "Hàng năm", "billing": "Monthly", "unit": "Flow", "currency": "USD", "erp_price": "1260", "reseller_price": "992,25", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License tự động hóa theo số lượng luồng (flow) cụ thể, không giới hạn theo người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate per flow plan", "sku": "Power Automate per flow plan", "license_type": "Hàng năm", "billing": "Annual", "unit": "Flow", "currency": "USD", "erp_price": "1200", "reseller_price": "945", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "License tự động hóa theo số lượng luồng (flow) cụ thể, không giới hạn theo người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate per flow plan", "sku": "Power Automate per flow plan", "license_type": "Hàng năm", "billing": "Monthly", "unit": "Flow", "currency": "USD", "erp_price": "120", "reseller_price": "94,5", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License tự động hóa theo số lượng luồng (flow) cụ thể, không giới hạn theo người dùng."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate per user plan", "sku": "Power Automate per user plan", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "180", "reseller_price": "141,75", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "License tự động hóa theo từng người dùng cá nhân, sử dụng connector tiêu chuẩn và cao cấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate per user plan", "sku": "Power Automate per user plan", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "189", "reseller_price": "148,806", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License tự động hóa theo từng người dùng cá nhân, sử dụng connector tiêu chuẩn và cao cấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power Automate per user plan", "sku": "Power Automate per user plan", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "18", "reseller_price": "14,175", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License tự động hóa theo từng người dùng cá nhân, sử dụng connector tiêu chuẩn và cao cấp."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power BI Premium Per User", "sku": "Power BI Premium Per User", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "302,4", "reseller_price": "254,016", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phân tích dữ liệu/BI cao cấp theo từng người dùng, dung lượng và hiệu năng xử lý dữ liệu lớn hơn Power BI Pro."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power BI Premium Per User", "sku": "Power BI Premium Per User", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "288", "reseller_price": "241,92", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Phân tích dữ liệu/BI cao cấp theo từng người dùng, dung lượng và hiệu năng xử lý dữ liệu lớn hơn Power BI Pro."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power BI Premium Per User", "sku": "Power BI Premium Per User", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "28,8", "reseller_price": "24,192", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phân tích dữ liệu/BI cao cấp theo từng người dùng, dung lượng và hiệu năng xử lý dữ liệu lớn hơn Power BI Pro."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power BI Pro", "sku": "Power BI Pro", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "168", "reseller_price": "141,12", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Công cụ phân tích/trực quan hóa dữ liệu (BI) tiêu chuẩn, chia sẻ báo cáo và dashboard trong tổ chức."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power BI Pro", "sku": "Power BI Pro", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "16,8", "reseller_price": "14,112", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Công cụ phân tích/trực quan hóa dữ liệu (BI) tiêu chuẩn, chia sẻ báo cáo và dashboard trong tổ chức."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Power Platform", "product": "Power BI Pro", "sku": "Power BI Pro", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "176,4", "reseller_price": "148,176", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Công cụ phân tích/trực quan hóa dữ liệu (BI) tiêu chuẩn, chia sẻ báo cáo và dashboard trong tổ chức."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "SQL Server", "product": "SQL Server 2025 CAL", "sku": "SQL Server 2025 - 1 User CAL", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "Server", "currency": "USD", "erp_price": "229", "reseller_price": "204,38", "vat": "10%", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "License truy cập máy khách (CAL) cho phép người dùng/thiết bị kết nối vào SQL Server 2025."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "SQL Server", "product": "SQL Server 2025 CAL", "sku": "SQL Server 2025 - 1 Device CAL", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "Server", "currency": "USD", "erp_price": "229", "reseller_price": "204,38", "vat": "10%", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "License truy cập máy khách (CAL) cho phép người dùng/thiết bị kết nối vào SQL Server 2025."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "SQL Server", "product": "SQL Server 2025 Enterprise - 2 core License Pack", "sku": "SQL Server 2025 Enterprise core - 2 core License Pack", "license_type": "Vĩnh viễn", "billing": "OneTime", "unit": "Core (2-core pack)", "currency": "USD", "erp_price": "15122", "reseller_price": "13496,39", "vat": "10%", "channel": "Reseller/OEM", "teams": "N/A", "copilot": "Không Copilot", "notes": "", "description": "License máy chủ cơ sở dữ liệu SQL Server 2025 bản Enterprise (đầy đủ tính năng cao cấp nhất), tính theo gói 2 core."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials", "sku": "Dynamics 365 Business Central Essentials", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "96", "reseller_price": "70,56", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phần mềm ERP cho doanh nghiệp vừa và nhỏ, quản lý tài chính, bán hàng, mua hàng và kho cơ bản."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials", "sku": "Dynamics 365 Business Central Essentials", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "960", "reseller_price": "705,6", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Phần mềm ERP cho doanh nghiệp vừa và nhỏ, quản lý tài chính, bán hàng, mua hàng và kho cơ bản."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials", "sku": "Dynamics 365 Business Central Essentials", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "3024", "reseller_price": "2222,64", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phần mềm ERP cho doanh nghiệp vừa và nhỏ, quản lý tài chính, bán hàng, mua hàng và kho cơ bản."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials", "sku": "Dynamics 365 Business Central Essentials", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "2880", "reseller_price": "2116,8", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "Phần mềm ERP cho doanh nghiệp vừa và nhỏ, quản lý tài chính, bán hàng, mua hàng và kho cơ bản."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials", "sku": "Dynamics 365 Business Central Essentials", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "2880", "reseller_price": "2116,8", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Phần mềm ERP cho doanh nghiệp vừa và nhỏ, quản lý tài chính, bán hàng, mua hàng và kho cơ bản."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials", "sku": "Dynamics 365 Business Central Essentials", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "1008", "reseller_price": "740,88", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phần mềm ERP cho doanh nghiệp vừa và nhỏ, quản lý tài chính, bán hàng, mua hàng và kho cơ bản."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials Attach", "sku": "Dynamics 365 Business Central Essentials Attach", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "240", "reseller_price": "189", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói bổ sung (attach) giá ưu đãi cho người dùng đã có license Business Central khác, mở rộng quyền truy cập Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials Attach", "sku": "Dynamics 365 Business Central Essentials Attach", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "720", "reseller_price": "567", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Gói bổ sung (attach) giá ưu đãi cho người dùng đã có license Business Central khác, mở rộng quyền truy cập Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials Attach", "sku": "Dynamics 365 Business Central Essentials Attach", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "756", "reseller_price": "595,35", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói bổ sung (attach) giá ưu đãi cho người dùng đã có license Business Central khác, mở rộng quyền truy cập Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials Attach", "sku": "Dynamics 365 Business Central Essentials Attach", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "720", "reseller_price": "567", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "Gói bổ sung (attach) giá ưu đãi cho người dùng đã có license Business Central khác, mở rộng quyền truy cập Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials Attach", "sku": "Dynamics 365 Business Central Essentials Attach", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "24", "reseller_price": "18,9", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói bổ sung (attach) giá ưu đãi cho người dùng đã có license Business Central khác, mở rộng quyền truy cập Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Essentials Attach", "sku": "Dynamics 365 Business Central Essentials Attach", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "252", "reseller_price": "198,45", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Gói bổ sung (attach) giá ưu đãi cho người dùng đã có license Business Central khác, mở rộng quyền truy cập Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central External Accountant", "sku": "Dynamics 365 Business Central External Accountant", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "0", "reseller_price": "0", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License miễn phí dành cho kế toán/đối tác bên ngoài truy cập dữ liệu Business Central của khách hàng để hỗ trợ sổ sách."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central External Accountant", "sku": "Dynamics 365 Business Central External Accountant", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "0", "reseller_price": "0", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "License miễn phí dành cho kế toán/đối tác bên ngoài truy cập dữ liệu Business Central của khách hàng để hỗ trợ sổ sách."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central External Accountant", "sku": "Dynamics 365 Business Central External Accountant", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "0", "reseller_price": "0", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "License miễn phí dành cho kế toán/đối tác bên ngoài truy cập dữ liệu Business Central của khách hàng để hỗ trợ sổ sách."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central External Accountant", "sku": "Dynamics 365 Business Central External Accountant", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "0", "reseller_price": "0", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License miễn phí dành cho kế toán/đối tác bên ngoài truy cập dữ liệu Business Central của khách hàng để hỗ trợ sổ sách."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central External Accountant", "sku": "Dynamics 365 Business Central External Accountant", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "0", "reseller_price": "0", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License miễn phí dành cho kế toán/đối tác bên ngoài truy cập dữ liệu Business Central của khách hàng để hỗ trợ sổ sách."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central External Accountant", "sku": "Dynamics 365 Business Central External Accountant", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "0", "reseller_price": "0", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "License miễn phí dành cho kế toán/đối tác bên ngoài truy cập dữ liệu Business Central của khách hàng để hỗ trợ sổ sách."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Premium", "sku": "Dynamics 365 Business Central Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "132", "reseller_price": "97,02", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phiên bản đầy đủ nhất của Business Central, bổ sung quản lý sản xuất (Manufacturing) và dịch vụ (Service Management) so với Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Premium", "sku": "Dynamics 365 Business Central Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "4158", "reseller_price": "3056,13", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phiên bản đầy đủ nhất của Business Central, bổ sung quản lý sản xuất (Manufacturing) và dịch vụ (Service Management) so với Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Premium", "sku": "Dynamics 365 Business Central Premium", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "1386", "reseller_price": "1018,71", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Phiên bản đầy đủ nhất của Business Central, bổ sung quản lý sản xuất (Manufacturing) và dịch vụ (Service Management) so với Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Premium", "sku": "Dynamics 365 Business Central Premium", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "3960", "reseller_price": "2910,6", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "Phiên bản đầy đủ nhất của Business Central, bổ sung quản lý sản xuất (Manufacturing) và dịch vụ (Service Management) so với Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Premium", "sku": "Dynamics 365 Business Central Premium", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "3960", "reseller_price": "2910,6", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Phiên bản đầy đủ nhất của Business Central, bổ sung quản lý sản xuất (Manufacturing) và dịch vụ (Service Management) so với Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Premium", "sku": "Dynamics 365 Business Central Premium", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "1320", "reseller_price": "970,2", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Phiên bản đầy đủ nhất của Business Central, bổ sung quản lý sản xuất (Manufacturing) và dịch vụ (Service Management) so với Essentials."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Team Members", "sku": "Dynamics 365 Business Central Team Members", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "302,4", "reseller_price": "222,264", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License hạn chế cho nhân viên chỉ cần xem báo cáo, nhập timesheet, phê duyệt - không thao tác nghiệp vụ đầy đủ."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Team Members", "sku": "Dynamics 365 Business Central Team Members", "license_type": "Hàng năm", "billing": "Triennial", "unit": "User", "currency": "USD", "erp_price": "288", "reseller_price": "211,68", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "License hạn chế cho nhân viên chỉ cần xem báo cáo, nhập timesheet, phê duyệt - không thao tác nghiệp vụ đầy đủ."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Team Members", "sku": "Dynamics 365 Business Central Team Members", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "100,8", "reseller_price": "74,088", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License hạn chế cho nhân viên chỉ cần xem báo cáo, nhập timesheet, phê duyệt - không thao tác nghiệp vụ đầy đủ."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Team Members", "sku": "Dynamics 365 Business Central Team Members", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "96", "reseller_price": "70,56", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "License hạn chế cho nhân viên chỉ cần xem báo cáo, nhập timesheet, phê duyệt - không thao tác nghiệp vụ đầy đủ."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Team Members", "sku": "Dynamics 365 Business Central Team Members", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "288", "reseller_price": "211,68", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "License hạn chế cho nhân viên chỉ cần xem báo cáo, nhập timesheet, phê duyệt - không thao tác nghiệp vụ đầy đủ."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Dynamics 365 Business Central Team Members", "sku": "Dynamics 365 Business Central Team Members", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "9,6", "reseller_price": "7,056", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "License hạn chế cho nhân viên chỉ cần xem báo cáo, nhập timesheet, phê duyệt - không thao tác nghiệp vụ đầy đủ."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Enterprise Mobility + Security E3", "sku": "Enterprise Mobility + Security E3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "14,4", "reseller_price": "12,096", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Bộ bảo mật & quản lý danh tính cấp trung: Azure AD Premium P1, Intune (MDM/MAM), Azure Information Protection P1."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Enterprise Mobility + Security E3", "sku": "Enterprise Mobility + Security E3", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "144", "reseller_price": "120,96", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Bộ bảo mật & quản lý danh tính cấp trung: Azure AD Premium P1, Intune (MDM/MAM), Azure Information Protection P1."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Enterprise Mobility + Security E3", "sku": "Enterprise Mobility + Security E3", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "151,2", "reseller_price": "127,008", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Bộ bảo mật & quản lý danh tính cấp trung: Azure AD Premium P1, Intune (MDM/MAM), Azure Information Protection P1."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Enterprise Mobility + Security E5", "sku": "Enterprise Mobility + Security E5", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "226,8", "reseller_price": "190,512", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Bộ bảo mật & quản lý danh tính cấp cao nhất: thêm Azure AD Premium P2, Microsoft Defender for Identity, Cloud App Security."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Enterprise Mobility + Security E5", "sku": "Enterprise Mobility + Security E5", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "216", "reseller_price": "181,44", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Bộ bảo mật & quản lý danh tính cấp cao nhất: thêm Azure AD Premium P2, Microsoft Defender for Identity, Cloud App Security."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Enterprise Mobility + Security E5", "sku": "Enterprise Mobility + Security E5", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "21,6", "reseller_price": "18,144", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Bộ bảo mật & quản lý danh tính cấp cao nhất: thêm Azure AD Premium P2, Microsoft Defender for Identity, Cloud App Security."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business", "sku": "Microsoft Defender for Business", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "2,88", "reseller_price": "2,415", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Giải pháp bảo mật endpoint (chống mã độc, EDR) dành riêng cho doanh nghiệp vừa và nhỏ (tối đa 300 thiết bị)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business", "sku": "Microsoft Defender for Business", "license_type": "Hàng năm", "billing": "Annual", "unit": "User", "currency": "USD", "erp_price": "28,8", "reseller_price": "24,192", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Giải pháp bảo mật endpoint (chống mã độc, EDR) dành riêng cho doanh nghiệp vừa và nhỏ (tối đa 300 thiết bị)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business", "sku": "Microsoft Defender for Business", "license_type": "Hàng năm", "billing": "Monthly", "unit": "User", "currency": "USD", "erp_price": "30,24", "reseller_price": "25,452", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Giải pháp bảo mật endpoint (chống mã độc, EDR) dành riêng cho doanh nghiệp vừa và nhỏ (tối đa 300 thiết bị)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business servers", "sku": "Microsoft Defender for Business servers", "license_type": "Hàng năm", "billing": "Annual", "unit": "Server", "currency": "USD", "erp_price": "86,4", "reseller_price": "72,576", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Mở rộng bảo vệ endpoint của Defender for Business sang máy chủ (server)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business servers", "sku": "Microsoft Defender for Business servers", "license_type": "Hàng năm", "billing": "Annual", "unit": "Server", "currency": "USD", "erp_price": "28,8", "reseller_price": "24,192", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Annual", "description": "Mở rộng bảo vệ endpoint của Defender for Business sang máy chủ (server)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business servers", "sku": "Microsoft Defender for Business servers", "license_type": "Hàng năm", "billing": "Monthly", "unit": "Server", "currency": "USD", "erp_price": "2,88", "reseller_price": "2,415", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Mở rộng bảo vệ endpoint của Defender for Business sang máy chủ (server)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business servers", "sku": "Microsoft Defender for Business servers", "license_type": "Hàng năm", "billing": "Monthly", "unit": "Server", "currency": "USD", "erp_price": "30,24", "reseller_price": "25,452", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Monthly", "description": "Mở rộng bảo vệ endpoint của Defender for Business sang máy chủ (server)."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "group": "Security & Identity", "product": "Microsoft Defender for Business servers", "sku": "Microsoft Defender for Business servers", "license_type": "Hàng năm", "billing": "Triennial", "unit": "Server", "currency": "USD", "erp_price": "86,4", "reseller_price": "72,576", "vat": "10%", "channel": "CSP", "teams": "N/A", "copilot": "Không Copilot", "notes": "Thanh toán Triennial", "description": "Mở rộng bảo vệ endpoint của Defender for Business sang máy chủ (server)."}];
+const SUMMARY = [{"segment": "Cá nhân & Hộ gia đình", "lines": 16, "skus": 13, "groups": "Microsoft 365 Cá nhân, Office - Vĩnh viễn, Visual Studio", "trait": "Office/Windows bản Vĩnh viễn (LTSC) mua đứt 1 lần + Microsoft 365 Personal/Family/Premium (thuê bao, có Copilot AI) cho cá nhân/hộ gia đình.", "offer": "Ưu đãi Sinh viên/Giáo viên (M365 miễn phí qua email trường, giảm 10% Surface); giữ giá Classic (không Copilot) cho KH cũ."}, {"segment": "Doanh nghiệp nhỏ và vừa (SMB)", "lines": 140, "skus": 35, "groups": "Exchange Online, Khác, Microsoft 365 Business, Office - Thuê bao, Office 365, OneDrive, Planner, Project, SQL Server, Teams, Visio, Windows - Enterprise", "trait": "Microsoft 365 Business (Basic/Standard/Premium), Office 365 E3/E5, Teams, Visio, Project - các gói thuê bao linh hoạt cho SMB.", "offer": "Microsoft for Startups Founders Hub: tín dụng Azure 1.000 - 150.000 USD + M365 Business Premium/GitHub/Visual Studio miễn phí cho startup."}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "lines": 185, "skus": 39, "groups": "AI - Copilot, Microsoft 365 Enterprise, Microsoft 365 Frontline, Power Platform, SQL Server, Security & Identity, Teams Rooms, Windows - Enterprise", "trait": "Microsoft 365 E3/E5/E7, bảo mật nâng cao (Defender, Entra), Power Platform, Dynamics 365, SQL/Windows Server Enterprise, Copilot.", "offer": "Chiết khấu Copilot theo bậc license (Frontier Suite/E7) qua CSP; giảm 50% Purview Suite cho KH đang dùng Copilot."}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "lines": 18, "skus": 3, "groups": "Office 365", "trait": "Office 365 E1/E1 Plus/F3 - các gói cơ bản, chi phí thấp, phù hợp khối hành chính công/đơn vị sự nghiệp.", "offer": "Giãn lộ trình tăng giá tối đa 10%/năm (thay vì tăng ngay); OneGov (chỉ US - tham khảo xu hướng ưu đãi toàn cầu)."}];
+const OFFERS = [{"segment": "Cá nhân & Hộ gia đình", "name": "Ưu đãi Sinh viên/Giáo viên (Education)", "desc": "Nhiều trường/tổ chức giáo dục cấp Microsoft 365 miễn phí qua email trường (.edu); giảm giá tới 10% cho thiết bị Surface; Copilot cá nhân giá ưu đãi ~4.99 USD/tháng cho SV đã xác thực.", "cond": "Học sinh/sinh viên/giảng viên có email trường hợp lệ, xác thực qua Microsoft Education portal", "status": "Đang áp dụng (thường xuyên)", "source": "microsoft.com/education, college-student-pricing"}, {"segment": "Cá nhân & Hộ gia đình", "name": "Microsoft 365 Classic (giá cũ, không Copilot)", "desc": "Khách hàng hiện tại có thể giữ mức giá cũ (Personal 69.99 USD/năm, Family 99.99 USD/năm) nếu từ chối tính năng Copilot AI tích hợp.", "cond": "Chỉ áp dụng cho khách hàng đang dùng gói trước khi tăng giá (không áp dụng khách mới)", "status": "Đang áp dụng", "source": "office-watch.com"}, {"segment": "Doanh nghiệp nhỏ và vừa (SMB) / Startup", "name": "Microsoft for Startups – Founders Hub", "desc": "Cấp tín dụng Azure miễn phí theo bậc: 1.000 USD (đăng ký cơ bản) → 5.000 USD (xác thực doanh nghiệp) → 100.000-150.000 USD (có mã giới thiệu từ quỹ đầu tư/vườn ươm đối tác). Kèm Microsoft 365 Business Premium, Visual Studio Enterprise, 20 seat GitHub Enterprise miễn phí.", "cond": "Công ty tư nhân, chưa qua vòng Series C, chưa từng dùng Azure, không phải agency/consultancy", "status": "Đang áp dụng (liên tục)", "source": "microsoft.com/startups, learn.microsoft.com"}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "name": "Ưu đãi Copilot theo quy mô (Frontier Suite / M365 E7)", "desc": "Chiết khấu theo bậc số lượng license (đạt mốc 10/100/300 license) khi mua qua kênh CSP cho gói Microsoft 365 E7 (kết hợp E5 + Entra Suite + Copilot + Agent 365).", "cond": "Giao dịch qua kênh CSP, đạt ngưỡng số lượng license tối thiểu theo bậc", "status": "Chương trình khuyến mãi đóng vào 31/12/2026", "source": "trustedtechteam.com"}, {"segment": "Doanh nghiệp lớn & Tập đoàn", "name": "Giảm 50% Microsoft Purview Suite", "desc": "Hai gói giảm 50%: (1) khách hàng dùng combo Business Premium + Copilot Business; (2) mọi tổ chức đang dùng Microsoft 365 Copilot.", "cond": "Đang là khách hàng M365 Copilot hoặc Business Premium+Copilot Business", "status": "Đang áp dụng", "source": "trustedtechteam.com"}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "name": "Giãn lộ trình tăng giá cho khối Chính phủ", "desc": "Nếu suite nào tăng giá List trên 10% theo đợt cập nhật giá 7/2026, khối Chính phủ được giãn lộ trình tăng tối đa 10%/năm cho đến khi đạt mức giá mới hoàn toàn (thay vì tăng ngay 1 lần như khối thương mại).", "cond": "Khách hàng Chính phủ (GCC/GCC-H/DoD hoặc tương đương) đang dùng các suite M365 Government bị ảnh hưởng", "status": "Áp dụng từ 7/2026, phân kỳ nhiều năm", "source": "microsoft.com/licensing/news, redriver.com"}, {"segment": "Cơ quan nhà nước & Đơn vị công lập", "name": "OneGov (chỉ áp dụng thị trường Mỹ - tham khảo xu hướng)", "desc": "Thỏa thuận giữa Microsoft và GSA Mỹ, giảm giá sâu Office 365, Copilot, Azure, Dynamics 365, Sentinel cho cơ quan liên bang Mỹ mua qua GSA, áp dụng tới 36 tháng.", "cond": "CHỈ áp dụng cơ quan liên bang Mỹ mua qua GSA - không áp dụng trực tiếp tại Việt Nam", "status": "Đến hết 9/2026 (đăng ký), hiệu lực giá tới 36 tháng", "source": "gsa.gov, nextgov.com"}, {"segment": "Khối Phi lợi nhuận (Nonprofit)", "name": "Chiết khấu chuẩn Nonprofit", "desc": "Chiết khấu 60-75% trên giá thương mại cho các sản phẩm M365 bị ảnh hưởng bởi đợt cập nhật giá 2026.", "cond": "Tổ chức phi lợi nhuận đã được Microsoft xác thực (qua nhà cung cấp thẩm định thứ 3)", "status": "Đang áp dụng", "source": "microsoft.com/nonprofits, microsoft.com/licensing/news"}, {"segment": "Khối Phi lợi nhuận (Nonprofit)", "name": "Giảm thêm Copilot cho Nonprofit", "desc": "Giảm thêm 15-40% (tùy bậc số lượng seat cam kết) trên giá Copilot đã áp mức nonprofit chuẩn 15%.", "cond": "Tổ chức phi lợi nhuận đã xác thực, cam kết theo bậc seat tương ứng, giao dịch qua kênh CSP", "status": "01/06/2026 - 30/09/2026", "source": "trustedtechteam.com"}];
+
+</script>
+<script>
+
+const segColor = {
+  "Cá nhân & Hộ gia đình": "var(--seg-personal)",
+  "Doanh nghiệp nhỏ và vừa (SMB)": "var(--seg-smb)",
+  "Doanh nghiệp nhỏ và vừa (SMB) / Startup": "var(--seg-smb)",
+  "Doanh nghiệp lớn & Tập đoàn": "var(--seg-ent)",
+  "Cơ quan nhà nước & Đơn vị công lập": "var(--seg-gov)",
+  "Khối Phi lợi nhuận (Nonprofit)": "var(--seg-npo)"
+};
+function colorFor(seg){ return segColor[seg] || "var(--ink-soft)"; }
+
+// ---------- TABS ----------
+const tabs = document.querySelectorAll(".tab");
+const views = document.querySelectorAll(".view");
+tabs.forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    tabs.forEach(t=>t.classList.remove("active"));
+    views.forEach(v=>v.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("view-"+tab.dataset.view).classList.add("active");
+  });
+});
+function goToCatalogFiltered(seg){
+  tabs.forEach(t=>t.classList.remove("active"));
+  views.forEach(v=>v.classList.remove("active"));
+  document.querySelector('.tab[data-view="catalog"]').classList.add("active");
+  document.getElementById("view-catalog").classList.add("active");
+  document.getElementById("segFilter").value = seg;
+  renderCatalog();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+// ---------- OVERVIEW ----------
+const segList = document.getElementById("segList");
+SUMMARY.forEach(s=>{
+  const row = document.createElement("div");
+  row.className = "seg-row";
+  row.style.setProperty("--c", colorFor(s.segment));
+  row.innerHTML = `
+    <div class="bar"></div>
+    <div class="body">
+      <h3>${s.segment} <span class="seg-tag">${s.skus} SKU</span></h3>
+      <p class="groups">${s.groups}</p>
+      <p class="trait">${s.trait}</p>
+      <p class="offer">★ ${s.offer}</p>
+    </div>
+    <div class="stat">
+      <div class="num">${s.lines}</div>
+      <div class="lbl">DÒNG SẢN PHẨM</div>
+      <div class="num2">${s.skus} sản phẩm</div>
+    </div>
+  `;
+  row.addEventListener("click", ()=>goToCatalogFiltered(s.segment));
+  segList.appendChild(row);
+});
+
+// ---------- CATALOG ----------
+const segFilter = document.getElementById("segFilter");
+const groupFilter = document.getElementById("groupFilter");
+const billingFilter = document.getElementById("billingFilter");
+const searchBox = document.getElementById("searchBox");
+const copilotToggle = document.getElementById("copilotToggle");
+const catalogBody = document.getElementById("catalogBody");
+const resultCount = document.getElementById("resultCount");
+let copilotOnly = false;
+
+function uniqueSorted(arr){ return [...new Set(arr)].filter(Boolean).sort((a,b)=>a.localeCompare(b,'vi')); }
+
+uniqueSorted(PRODUCTS.map(p=>p.segment)).forEach(v=>{
+  const o = document.createElement("option"); o.value=v; o.textContent=v; segFilter.appendChild(o);
+});
+uniqueSorted(PRODUCTS.map(p=>p.group)).forEach(v=>{
+  const o = document.createElement("option"); o.value=v; o.textContent=v; groupFilter.appendChild(o);
+});
+uniqueSorted(PRODUCTS.map(p=>p.billing)).forEach(v=>{
+  const o = document.createElement("option"); o.value=v; o.textContent=v; billingFilter.appendChild(o);
+});
+
+document.getElementById("catalogCount").textContent = "· " + PRODUCTS.length;
+document.getElementById("offersCount").textContent = "· " + OFFERS.length;
+
+copilotToggle.addEventListener("click", ()=>{
+  copilotOnly = !copilotOnly;
+  copilotToggle.classList.toggle("on", copilotOnly);
+  renderCatalog();
+});
+[segFilter, groupFilter, billingFilter].forEach(el=>el.addEventListener("change", renderCatalog));
+searchBox.addEventListener("input", renderCatalog);
+
+function fmtPrice(v){
+  if(v === undefined || v === null || v.trim() === "") return "—";
+  return v;
+}
+
+function renderCatalog(){
+  const seg = segFilter.value;
+  const grp = groupFilter.value;
+  const bill = billingFilter.value;
+  const q = searchBox.value.trim().toLowerCase();
+
+  const filtered = PRODUCTS.filter(p=>{
+    if(seg && p.segment !== seg) return false;
+    if(grp && p.group !== grp) return false;
+    if(bill && p.billing !== bill) return false;
+    if(copilotOnly && !p.copilot.includes("Có")) return false;
+    if(q){
+      const hay = (p.product+" "+p.sku+" "+p.description+" "+p.group).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  resultCount.textContent = `Hiển thị ${filtered.length} / ${PRODUCTS.length} dòng sản phẩm`;
+
+  catalogBody.innerHTML = "";
+  if(filtered.length === 0){
+    catalogBody.innerHTML = `<tr class="empty-row"><td colspan="13">Không tìm thấy sản phẩm phù hợp.</td></tr>`;
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+  filtered.forEach(p=>{
+    const tr = document.createElement("tr");
+    const isCopilot = p.copilot.includes("Có");
+    const isTeams = p.teams.includes("Có");
+    const teamsBadge = p.teams === "N/A"
+      ? '<span class="badge nocopilot">N/A</span>'
+      : (isTeams ? '<span class="badge teams-yes">Có Teams</span>' : '<span class="badge teams-no">No Teams</span>');
+    tr.innerHTML = `
+      <td><span class="seg-dot" style="--c:${colorFor(p.segment)}"></span>${p.segment}</td>
+      <td>${p.group}</td>
+      <td class="product">${p.sku}</td>
+      <td>${p.license_type}</td>
+      <td>${p.billing}</td>
+      <td>${p.unit}</td>
+      <td class="num">${fmtPrice(p.erp_price)}</td>
+      <td class="num">${fmtPrice(p.reseller_price)}</td>
+      <td>${p.vat}</td>
+      <td>${p.channel}</td>
+      <td>${teamsBadge}</td>
+      <td>${isCopilot ? '<span class="badge copilot">✨ Copilot</span>' : '<span class="badge nocopilot">—</span>'}</td>
+      <td class="desc">${p.description || ""}</td>
+      <td class="notes">${p.notes || "—"}</td>
+    `;
+    frag.appendChild(tr);
+  });
+  catalogBody.appendChild(frag);
+}
+renderCatalog();
+
+// ---------- OFFERS ----------
+const offerList = document.getElementById("offerList");
+OFFERS.forEach(o=>{
+  const item = document.createElement("div");
+  item.className = "offer-item";
+  item.innerHTML = `
+    <div class="seg-label"><span class="seg-dot" style="--c:${colorFor(o.segment)}"></span>${o.segment}</div>
+    <div>
+      <h3>${o.name}</h3>
+      <p class="desc">${o.desc}</p>
+      <div class="offer-meta">
+        <span><strong>Điều kiện:</strong> ${o.cond}</span>
+        <span class="${o.status.includes('Đang áp dụng') ? 'status-live':''}"><strong>Trạng thái:</strong> ${o.status}</span>
+        <span><strong>Nguồn:</strong> ${o.source}</span>
+      </div>
+    </div>
+  `;
+  offerList.appendChild(item);
+});
+
+// ---------- GLOSSARY ----------
+const GLOSSARY = [
+  {term:"CSP", def:"Cloud Solution Provider — mô hình đối tác được Microsoft ủy quyền bán, quản lý và hỗ trợ license trực tiếp cho khách hàng cuối."},
+  {term:"Reseller / OEM", def:"Kênh bán license vĩnh viễn (đóng hộp hoặc cài sẵn theo máy) qua nhà phân phối, không qua nền tảng CSP."},
+  {term:"LTSC", def:"Long-Term Servicing Channel — bản Office/Windows cài đặt vĩnh viễn (mua đứt một lần), không nhận cập nhật tính năng mới như bản thuê bao."},
+  {term:"CAL", def:"Client Access License — license truy cập máy khách, cấp quyền cho 1 người dùng hoặc 1 thiết bị kết nối vào máy chủ (ví dụ SQL Server)."},
+  {term:"KCT", def:"Ký hiệu 'Không chịu thuế' — sản phẩm không áp dụng VAT theo quy định hiện hành."},
+  {term:"EMS (Enterprise Mobility + Security)", def:"Bộ giải pháp bảo mật & quản lý danh tính của Microsoft, gồm Azure AD Premium, Intune, Azure Information Protection."},
+  {term:"E1 / E3 / E5 / E7", def:"Các bậc gói Office 365 / Microsoft 365 Enterprise, tăng dần về tính năng: E1 (cơ bản, chỉ bản web) → E3 (đầy đủ Office desktop + bảo mật cơ bản) → E5 (bảo mật/phân tích/voice nâng cao) → E7 (mở rộng thêm trên nền E5, có Copilot/Agent 365)."},
+  {term:"F1 / F3 (Frontline)", def:"Gói dành cho nhân viên tuyến đầu (Frontline Worker) — quyền hạn giới hạn hơn E-series, chi phí thấp; F1 tối thiểu, F3 có thêm mailbox Exchange riêng."},
+  {term:"Copilot", def:"Trợ lý AI của Microsoft tích hợp vào Word, Excel, Outlook, Teams... hỗ trợ soạn thảo, tóm tắt, phân tích dữ liệu bằng ngôn ngữ tự nhiên."},
+  {term:"Power Platform", def:"Bộ công cụ low-code của Microsoft gồm Power Apps (xây ứng dụng), Power Automate (tự động hóa quy trình), Power BI (phân tích dữ liệu)."},
+  {term:"RPA (per process)", def:"Robotic Process Automation — mô hình license Power Automate tính theo từng quy trình/bot tự động hóa cụ thể, không theo người dùng."},
+  {term:"Dynamics 365 Business Central", def:"Phần mềm ERP của Microsoft dành cho doanh nghiệp vừa và nhỏ, quản lý tài chính, bán hàng, mua hàng, kho và sản xuất."},
+  {term:"Defender for Business", def:"Giải pháp bảo mật endpoint (chống mã độc, EDR) của Microsoft dành riêng cho doanh nghiệp vừa và nhỏ, tối đa 300 thiết bị."},
+  {term:"Annual / Monthly / Triennial", def:"Chu kỳ thanh toán của gói thuê bao: theo năm, theo tháng, hoặc theo cam kết 3 năm (thường có giá ưu đãi hơn)."},
+  {term:"No Teams / Có Teams", def:"Biến thể SKU: bản 'No Teams' loại bỏ ứng dụng Microsoft Teams ra khỏi gói (thường theo yêu cầu chống độc quyền tại EU/UK), giá thấp hơn bản đầy đủ."},
+  {term:"OneGov", def:"Thỏa thuận riêng giữa Microsoft và GSA (Mỹ), giảm giá sâu cho cơ quan liên bang Mỹ mua qua GSA — không áp dụng trực tiếp tại Việt Nam."}
+];
+const glossaryGrid = document.getElementById("glossaryGrid");
+GLOSSARY.forEach(g=>{
+  const el = document.createElement("dl");
+  el.className = "glossary-item";
+  el.innerHTML = `<dt>${g.term}</dt><dd>${g.def}</dd>`;
+  glossaryGrid.appendChild(el);
+});
+
+</script>
+</body>
+</html>
